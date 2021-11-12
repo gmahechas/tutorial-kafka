@@ -1,0 +1,19 @@
+{
+    "name": "tutorial-kafka-producer",
+    "version": "1.0.0",
+    "main": "index.js",
+    "author": "gmahechas <gmahechas@ingenieros.com>",
+    "license": "MIT",
+    "scripts": {
+        "start": "ts-node-dev --respawn --pretty --transpile-only src/index.ts"
+    },
+    "dependencies": {
+        "kafkajs": "^1.15.0",
+        "kafkajs-snappy": "^1.1.0"
+    },
+    "devDependencies": {
+        "@types/node": "^16.11.7",
+        "ts-node-dev": "^1.1.8",
+        "typescript": "^4.4.4"
+    }
+}
