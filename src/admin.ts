@@ -27,4 +27,4 @@ const run = async () => {
 	}
 }
 
-run();
+export const admin = run;

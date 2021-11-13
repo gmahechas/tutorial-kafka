@@ -26,4 +26,4 @@ const run = async () => {
 	}
 }
 
-run();
+export const consumer = run;

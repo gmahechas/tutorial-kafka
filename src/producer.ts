@@ -28,4 +28,4 @@ const run = async () => {
 	}
 }
 
-run();
+export const producer = run;
