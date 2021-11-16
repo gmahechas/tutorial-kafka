@@ -1,10 +1,10 @@
-import { Kafka, ConfigResourceTypes } from 'kafkajs';
+import { Kafka } from 'kafkajs';
 
 const run = async () => {
 	try {
 		const kafka = new Kafka({
-			clientId: 'producer',
-			brokers: ['10.1.0.229:9090', '10.1.229.9091', '10.1.229.9092']
+			clientId: 'admin',
+			brokers: ['10.1.0.229:9090'/* , '10.1.229.9091', '10.1.229.9092' */]
 		});
 		const admin = kafka.admin();
 		admin.on('admin.connect', () => console.log('admin.connect'));
@@ -18,13 +18,12 @@ const run = async () => {
 		console.log('describeCluster:::', describeCluster);
 		console.log('listTopics:::', listTopics);
 		console.log('listGroups:::', listGroups);
-		console.log('describeGroups:::', describeGroups.groups);
-
+		console.log('describeGroups:::', describeGroups.groups[0].members);
 
 		await admin.disconnect();
 	} catch (error) {
 		console.error(error);
-	}
+		run();}
 }
 
-export const admin = run;
+run();

@@ -5,7 +5,11 @@
     "author": "gmahechas <gmahechas@ingenieros.com>",
     "license": "MIT",
     "scripts": {
-        "start": "ts-node-dev --respawn --pretty --transpile-only src/index.ts"
+        "admin": "ts-node-dev --rs --respawn --pretty src/admin.ts",
+        "consumer-one": "ts-node-dev --rs --respawn --pretty src/consumer-one.ts",
+        "consumer-two": "ts-node-dev --rs --respawn --pretty src/consumer-two.ts",
+        "lags": "ts-node-dev --rs --respawn --pretty src/lags.ts",
+        "producer": "ts-node-dev --rs --respawn --pretty src/producer.ts"
     },
     "dependencies": {
         "kafkajs": "^1.15.0",
