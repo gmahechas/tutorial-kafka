@@ -5,16 +5,16 @@ CompressionCodecs[CompressionTypes.Snappy] = snappy;
 const run = async () => {
 	try {
 		const kafka = new Kafka({
-			clientId: 'producer',
+			clientId: 'ms-1-expressjs',
 			brokers: ['10.1.0.229:9090'/* , '10.1.229.9091', '10.1.229.9092' */]
 		});
 		const producer = kafka.producer({ idempotent: true });
 		producer.on('producer.connect', () => console.log('producer.connect'));
-		
+
 		await producer.connect();
 
 		const message = await producer.send({
-			topic: 'topic1',
+			topic: 'country-created',
 			acks: -1,
 			compression: 2,
 			messages: [{ value: '1' }]

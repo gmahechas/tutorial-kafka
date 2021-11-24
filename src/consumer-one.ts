@@ -1,16 +1,17 @@
-import { Kafka, CompressionTypes, CompressionCodecs } from 'kafkajs';
+import { Kafka, CompressionTypes, CompressionCodecs, logLevel } from 'kafkajs';
 const snappy = require('kafkajs-snappy');
 CompressionCodecs[CompressionTypes.Snappy] = snappy;
 
 const run = async () => {
 	try {
 		const kafka = new Kafka({
-			clientId: `ms-1-expressjs-1`,
-			brokers: ['10.1.0.229:9090'/* , '10.1.229.9091', '10.1.229.9092' */]
+			clientId: `ms-1-expressjs`,
+			brokers: ['10.1.0.229:9090'/* , '10.1.229.9091', '10.1.229.9092' */],
+			logLevel: logLevel.ERROR,
 		});
-		const consumer = kafka.consumer({ groupId: 'group1', heartbeatInterval: 1000 });
+		const consumer = kafka.consumer({ groupId: 'country', heartbeatInterval: 1000 });
 		const showData = false;
-		consumer.on('consumer.heartbeat', (data) => console.log((showData) ? data : '', 'consumer.heartbeat'));
+/* 		consumer.on('consumer.heartbeat', (data) => console.log((showData) ? data : '', 'consumer.heartbeat'));
 		consumer.on('consumer.commit_offsets', (data) => console.log((showData) ? data : '', 'consumer.commit_offsets'));
 		consumer.on('consumer.group_join', (data) => console.log((showData) ? data : '', 'consumer.group_join'));
 		consumer.on('consumer.fetch_start', (data) => console.log((showData) ? data : '', 'consumer.fetch_start'));
@@ -24,10 +25,10 @@ const run = async () => {
 		consumer.on('consumer.received_unsubscribed_topics', (data) => console.log((showData) ? data : '', 'consumer.received_unsubscribed_topics'));
 		consumer.on('consumer.network.request', (data) => console.log((showData) ? data : '', 'consumer.network.request'));
 		consumer.on('consumer.network.request_timeout', (data) => console.log((showData) ? data : '', 'consumer.network.request_timeout'));
-		consumer.on('consumer.network.request_queue_size', (data) => console.log((showData) ? data : '', 'consumer.network.request_queue_size'));
+		consumer.on('consumer.network.request_queue_size', (data) => console.log((showData) ? data : '', 'consumer.network.request_queue_size')); */
 		await consumer.connect();
 
-		await consumer.subscribe({ topic: 'topic1', fromBeginning: true });
+		await consumer.subscribe({ topic: /country-.*/i, fromBeginning: true });
 		await consumer.run({
 			/* autoCommit: false, */
 			eachBatchAutoResolve: false,
@@ -39,7 +40,7 @@ const run = async () => {
 					/* await commitOffsetsIfNecessary({
 						topics: [
 							{
-								topic: 'topic1',
+								topic: 'country-created',
 								partitions: [
 									{
 										partition: batch.partition,
@@ -54,8 +55,8 @@ const run = async () => {
 			}
 		});
 		/* consumer.seek({ topic: 'topic1', partition: 0, offset: '4' }); */
-		process.on('SIGINT', async () => { await consumer.stop(); await consumer.disconnect(); });
-		process.on('SIGTERM', async () => { await consumer.stop(); await consumer.disconnect(); });
+		process.on('SIGINT', async () => { await consumer.disconnect(); });
+		process.on('SIGTERM', async () => { await consumer.disconnect(); });
 	} catch (error) {
 		console.error(error);
 	}

@@ -8,6 +8,7 @@
         "admin": "ts-node-dev --rs --respawn --pretty src/admin.ts",
         "consumer-one": "ts-node-dev --rs --respawn --pretty src/consumer-one.ts",
         "consumer-two": "ts-node-dev --rs --respawn --pretty src/consumer-two.ts",
+        "consumer-three": "ts-node-dev --rs --respawn --pretty src/consumer-three.ts",
         "lags": "ts-node-dev --rs --respawn --pretty src/lags.ts",
         "producer": "ts-node-dev --rs --respawn --pretty src/producer.ts"
     },
